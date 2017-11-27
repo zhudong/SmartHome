@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SmartHome</string>
+    <!-- main -->
+    <string name="main_home_tab_string">Tab1</string>
+    <string name="main_need_tab_string">Tab2</string>
+    <string name="main_package_tab_string">Tab3</string>
+    <string name="main_me_tab_string">Tab4</string>
+    <string name="main_group">Tab5</string>
+    <string name="main_source">Tab6</string>
+    <string name="String_back_toast">再按一下退出程序</string>
+
+</resources>

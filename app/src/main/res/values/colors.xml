@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorPrimary">#216EB3</color>
+    <color name="textColorSmall">#ABABAB</color>
+    <color name="white">#fff</color>
+    <color name="tips_bg">#e0000000</color>
+    <color name="gray_999">#999999</color>
+    <color name="default_bg">#F1F1F1</color>
+    <color name="black">#000</color>
+    <color name="tv_color_gray_02">#949494</color>
+    <color name="red_shape">#FFF20818</color>
+    <color name="title_bar_black_dark">#DF4213</color>
+    <color name="gray_666">#666666</color>
+    <color name="gary_e8e8">#e8e8e8</color>
+    <color name="gary_d8d8">#D8D8D8</color>
+    <color name="gray_fcfc">#FCFCFC</color>
+    <color name="gray_3f">#3F3F3F</color>
+</resources>
