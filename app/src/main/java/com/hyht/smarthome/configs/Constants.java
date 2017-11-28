@@ -9,5 +9,5 @@ import com.hyht.smarthome.utils.LogUtils;
 public class Constants {
     public static final int DEBUGLEVEL = LogUtils.LEVEL_ALL;
 
-    public static final String URL = "";
+    public static final String URL = "http://122.226.100.91/";
 }
