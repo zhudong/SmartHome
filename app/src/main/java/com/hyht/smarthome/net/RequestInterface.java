@@ -1,9 +1,11 @@
 package com.hyht.smarthome.net;
 
+import com.hyht.smarthome.base.BaseEntity;
 import com.hyht.smarthome.bean.AdyenUserInfoBean;
 import com.hyht.smarthome.bean.PayBean;
 import com.hyht.smarthome.bean.PayResultBaen;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,7 +21,7 @@ import retrofit2.http.Path;
 
 public interface RequestInterface {
     @GET("adyen/listRecurringDetails/uin/102802")
-    Call<ResponseBody> getUserInfo();
+    Observable<AdyenUserInfoBean> getUserInfo();
 
     @HTTP(method = "GET", path = "adyen/listRecurringDetails/uin/{uId}", hasBody = false)
     Call<AdyenUserInfoBean> getUserInfoByHttp(@Path("uId") int uId);
@@ -28,5 +30,5 @@ public interface RequestInterface {
     Call<PayResultBaen> recurringPay(@Body PayBean payBean);
 
     @POST("recurringPayByRxJava")
-    Observable<PayResultBaen> recurringPayByRxJava(@Body PayBean bean);
+    Observable<BaseEntity<PayResultBaen>> recurringPayByRxJava(@Body PayBean bean);
 }

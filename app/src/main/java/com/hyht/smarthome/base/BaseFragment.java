@@ -11,6 +11,12 @@ import com.hyht.smarthome.manager.BusEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by Longer on 2016/10/26.
  */
@@ -99,5 +105,12 @@ public abstract class BaseFragment<ACTIVITY_TYPE> extends Fragment implements Vi
         super.onPause();
     }
 
-
+    public <T>ObservableTransformer<T, T> setThread(){
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
 }

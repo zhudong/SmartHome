@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -25,6 +26,12 @@ import com.hyht.smarthome.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Longer on 2016/10/26.
@@ -47,22 +54,22 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         EventBus.getDefault().register(this);
         //沉浸式标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //getSupportActionBar().hide();
+        View view = setInitView();
+        setContentView(view);
+//        getSupportActionBar().hide();
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 19) {
-            /*// 透明状态栏
+            // 透明状态栏
             getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 透明导航栏
             getWindow().addFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);*/
-            getWindow().setStatusBarColor(getResources().getColor(R.color.title_bar_black_dark));
-            //view.setPadding(0, 20, 0, 0);
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
+            view.setPadding(0, 40, 0, 0);
         }
         //
         //mSweetAlertDialog = new SweetAlertDialog(this);
-        View view = setInitView();
-        setContentView(view);
+
         //这里这一段会影响弹出的dialog型的Activity，故暂时注释掉
         //getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
@@ -352,5 +359,14 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 //            }
 //        });
 //    }
+
+    public <T>ObservableTransformer<T, T> setThread(){
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
 
 }
