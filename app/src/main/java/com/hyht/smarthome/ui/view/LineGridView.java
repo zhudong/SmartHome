@@ -45,7 +45,7 @@ public class LineGridView extends GridView {
         Paint localPaint; //设置画笔
         localPaint = new Paint();
         localPaint.setStyle(Paint.Style.STROKE); //画笔实心
-        localPaint.setColor(getContext().getResources().getColor(R.color.gray_3f));//画笔颜色
+        localPaint.setColor(getContext().getResources().getColor(R.color.light_blue));//画笔颜色
 
         View view0 = getChildAt(0); //第一个view
         View viewColLast = getChildAt(colnum - 1);//第一行最后一个view
