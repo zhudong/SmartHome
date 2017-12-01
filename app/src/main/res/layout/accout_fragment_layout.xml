@@ -26,4 +26,28 @@
         android:text="Send UDP" />
 
 
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/account_net_test_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:text="网络请求测试 HTTP协议" />
+    <EditText
+        android:id="@+id/account_phone_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="手机号码" />
+
+    <Button
+        android:id="@+id/account_inquiry_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/account_phone_address_tv"/>
 </LinearLayout>

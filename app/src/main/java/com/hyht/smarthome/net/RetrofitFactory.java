@@ -27,7 +27,7 @@ public class RetrofitFactory {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.URL)
+                .baseUrl(Constants.URL_PHONE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)

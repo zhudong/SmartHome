@@ -4,16 +4,17 @@ import com.hyht.smarthome.base.BaseEntity;
 import com.hyht.smarthome.bean.AdyenUserInfoBean;
 import com.hyht.smarthome.bean.PayBean;
 import com.hyht.smarthome.bean.PayResultBaen;
+import com.hyht.smarthome.bean.PhoneBean;
+import com.hyht.smarthome.bean.Result;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2017-11-27.
@@ -31,4 +32,7 @@ public interface RequestInterface {
 
     @POST("recurringPayByRxJava")
     Observable<BaseEntity<PayResultBaen>> recurringPayByRxJava(@Body PayBean bean);
+
+    @GET("mobile/get")
+    Observable<PhoneBean<Result>> getPhoneAddress(@Query("phone") long phone, @Query("key") String key);
 }
