@@ -13,6 +13,7 @@ import com.hyht.smarthome.MainActivity;
 import com.hyht.smarthome.R;
 import com.hyht.smarthome.base.BaseEntity;
 import com.hyht.smarthome.base.BaseFragment;
+import com.hyht.smarthome.bean.AdyenUserInfoBean;
 import com.hyht.smarthome.bean.PayBean;
 import com.hyht.smarthome.bean.PayResultBaen;
 import com.hyht.smarthome.bean.PhoneBean;
@@ -22,6 +23,14 @@ import com.hyht.smarthome.net.BaseObserver;
 import com.hyht.smarthome.net.PhoneObserver;
 import com.hyht.smarthome.net.RetrofitFactory;
 import com.hyht.smarthome.utils.LogUtils;
+
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -38,6 +47,7 @@ public class AccountFragment extends BaseFragment<MainActivity> {
     private EditText phoneEt;
     private Button inquiryBtn;
     private TextView phoneTv;
+
     @Override
     protected void initTitleBar() {
 
@@ -45,12 +55,12 @@ public class AccountFragment extends BaseFragment<MainActivity> {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.account_send_btn:
                 break;
             case R.id.account_inquiry_btn:
-                if(!TextUtils.isEmpty(phoneEt.getText()))
-                getPhoneAddress(phoneEt.getText().toString());
+                if (!TextUtils.isEmpty(phoneEt.getText()))
+                    getPhoneAddress(phoneEt.getText().toString());
                 break;
         }
     }
@@ -80,18 +90,35 @@ public class AccountFragment extends BaseFragment<MainActivity> {
 
     }
 
-    public void getPhoneAddress(String phone){
+    public void getPhoneAddress(String phone) {
         RetrofitFactory.getInstance().API()
                 .getPhoneAddress(Long.parseLong(phone), Constants.JUHE_KEY)
-                .compose(this.<PhoneBean<Result>>setThread())
-                .subscribe(new PhoneObserver<Result>() {
+                .flatMap(new Function<PhoneBean<Result>, ObservableSource<AdyenUserInfoBean>>() {
                     @Override
-                    protected void onSuccess(PhoneBean<Result> t) throws Exception {
-                        phoneTv.setText(t.getResult().getCompany() + t.getResult().getProvince() + t.getResult().getCity() + t.getResult().getCard());
+                    public ObservableSource<AdyenUserInfoBean> apply(@NonNull PhoneBean<Result> resultPhoneBean) throws Exception {
+                        phoneTv.setText(resultPhoneBean.getResult().getCompany() + resultPhoneBean.getResult().getProvince() + resultPhoneBean.getResult().getCity());
+                        return RetrofitFactory.getInstance().API().getUserInfo();
+                    }
+                })
+                .compose(this.<AdyenUserInfoBean>setThread())
+                .subscribe(new Observer<AdyenUserInfoBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
                     }
 
                     @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                    public void onNext(@NonNull AdyenUserInfoBean adyenUserInfoBean) {
+                        LogUtils.d(adyenUserInfoBean.shopperReference);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
                 });
@@ -99,7 +126,7 @@ public class AccountFragment extends BaseFragment<MainActivity> {
 
     }
 
-    public void recurringPayByRxJava(){
+    public void recurringPayByRxJava() {
         PayBean bean = new PayBean();
         bean.setReference(56269);
         bean.setAmount(0.009999999776482582f);

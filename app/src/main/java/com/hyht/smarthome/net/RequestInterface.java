@@ -21,7 +21,7 @@ import retrofit2.http.Query;
  */
 
 public interface RequestInterface {
-    @GET("adyen/listRecurringDetails/uin/102802")
+    @GET("http://122.226.100.91/adyen/listRecurringDetails/uin/102802")
     Observable<AdyenUserInfoBean> getUserInfo();
 
     @HTTP(method = "GET", path = "adyen/listRecurringDetails/uin/{uId}", hasBody = false)
